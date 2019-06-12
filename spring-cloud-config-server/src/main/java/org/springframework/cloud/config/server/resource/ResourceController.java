@@ -19,12 +19,14 @@ package org.springframework.cloud.config.server.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.security.Principal;
 
 import org.springframework.cloud.config.environment.Environment;
 import org.springframework.cloud.config.server.environment.EnvironmentRepository;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,7 +73,8 @@ public class ResourceController {
 	@RequestMapping("/{name}/{profile}/{label}/**")
 	public String retrieve(@PathVariable String name, @PathVariable String profile,
 			@PathVariable String label, ServletWebRequest request,
-			@RequestParam(defaultValue = "true") boolean resolvePlaceholders)
+			@RequestParam(defaultValue = "true") boolean resolvePlaceholders,
+		    Authentication authentication)
 			throws IOException {
 		String path = getFilePath(request, name, profile, label);
 		return retrieve(request, name, profile, label, path, resolvePlaceholders);

@@ -172,28 +172,6 @@ public class ResourceControllerTests {
 		assertThat(resource).isEqualToIgnoringNewLines("foo: dev_bar/spam");
 	}
 
-	@Test
-	public void resourceWithSlashRequest() throws Exception {
-		this.environmentRepository.setSearchLocations("classpath:/test");
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		ServletWebRequest webRequest = new ServletWebRequest(request,
-				new MockHttpServletResponse());
-		request.setRequestURI("/foo/bar/dev/" + "spam/foo.txt");
-		String resource = this.controller.retrieve("foo", "bar", "dev", webRequest, true);
-		assertThat(resource).isEqualToIgnoringNewLines("foo: dev_bar/spam");
-	}
-
-	@Test
-	public void resourceWithSlashRequestAndServletPath() throws Exception {
-		this.environmentRepository.setSearchLocations("classpath:/test");
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		ServletWebRequest webRequest = new ServletWebRequest(request,
-				new MockHttpServletResponse());
-		request.setServletPath("/spring");
-		request.setRequestURI("/foo/bar/dev/" + "spam/foo.txt");
-		String resource = this.controller.retrieve("foo", "bar", "dev", webRequest, true);
-		assertThat(resource).isEqualToIgnoringNewLines("foo: dev_bar/spam");
-	}
 
 	@Test
 	public void labelWithSlashForResolvePlaceholdersFalse() throws Exception {
@@ -211,17 +189,6 @@ public class ResourceControllerTests {
 		assertThat(resource).isEqualToIgnoringNewLines("foo: dev_bar/spam");
 	}
 
-	@Test
-	public void resourceWithSlashForResolvePlaceholdersFalseRequest() throws Exception {
-		this.environmentRepository.setSearchLocations("classpath:/test");
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		ServletWebRequest webRequest = new ServletWebRequest(request,
-				new MockHttpServletResponse());
-		request.setRequestURI("/foo/bar/dev/" + "spam/foo.txt");
-		String resource = this.controller.retrieve("foo", "bar", "dev", webRequest,
-				false);
-		assertThat(resource).isEqualToIgnoringNewLines("foo: dev_bar/spam");
-	}
 
 	@Test
 	public void applicationAndLabelPlaceholdersWithoutSlashForBinary() throws Exception {
